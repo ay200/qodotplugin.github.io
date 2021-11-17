@@ -364,13 +364,19 @@ You can display a model in TrenchBroom over a Point Class definition. You can th
 ## Requirements
 
 - The model has to be an .obj
+- The model must be scaled appropriately for the [Inverse Scale](https://qodotplugin.github.io/docs/geometry.html#scale) if you expect it to be 1:1 accurate to the position and size of the scene its point class with create in Godot.
 - You have to create an entity definition for this model specifically in your game’s FGD.
 - You have to enable `obj_neverball` in your Trenchbroom Game Config with this line: `"modelformats": [ "obj_neverball" ]`.
 - You cannot swap models in and out of Trenchbroom like you can with Source.
 
 ## Setup
 
-You can add a **Meta Properties** in your point entity definition with model as the key and the relative path of your .obj file as the value.
+If 1:1 accuracy is required, adjust the scale of the model with the following formula: (Inverse Scale) / 64.
+
+Example: if an Inverse Scale is 50, then a model meant to be used in Trenchbroom would need to be adjusted to 78.125% of its original scale.
+Note: 64 is the multiplier used in the current version of Trenchbroom (2021.1) to (parse .obj models)[https://github.com/TrenchBroom/TrenchBroom/blob/031adafd5411dfa895e74eb73b5fce71def4a0a0/common/src/IO/ObjParser.cpp#L223]. This could change in the future.
+
+Add a **Meta Properties** in your point entity definition with model as the key and the relative path of your .obj file as the value.
 
 Example: `key: model value: "entities/models/my_model.obj"`
 
